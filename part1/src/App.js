@@ -1,6 +1,6 @@
-const Hello = () => (
+const Hello = (props) => (
   <div>
-    <p>Hello World</p>
+    <p>Hello World {props.name}</p>
   </div>
 )
 
@@ -9,7 +9,8 @@ const App = () => {
   return (
     <div>
     <p>Greetings</p>
-    <Hello/>
+    <Hello name='George'/>
+    <Hello name='Daisy'/>
   </div>
   )
 }
