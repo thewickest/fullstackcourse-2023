@@ -8,14 +8,16 @@ const Header = ({name}) => {
   )
 }
 
+/**We have already refactored the button */
 const Button = ({onClick, name}) => {
   return (
     <>
     <button onClick={onClick}>{name}</button>
     </>
   )
-}
 
+}
+/**We have already refactored the Statistic */
 const Statistic = ({name, number}) => {
   if(name==="positive"){
     return(<p>{name} {number} %</p>)
