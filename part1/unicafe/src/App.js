@@ -17,11 +17,11 @@ const Button = ({onClick, name}) => {
 }
 
 const Statistic = ({name, number}) => {
-  return (
-    <>
-    <p>{name} {number}</p>
-    </>
-  )
+  if(name==="positive"){
+    return(<p>{name} {number} %</p>)
+  }else {
+    return(<p>{name} {number}</p>)
+  }
 }
 
 
@@ -30,6 +30,10 @@ const App = () => {
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
+
+  const getTotal = () => {
+    return bad+good+neutral
+  }
 
   return (
     <div>
@@ -41,6 +45,9 @@ const App = () => {
       <Statistic name="good" number={good}/>
       <Statistic name="neutral" number={neutral}/>
       <Statistic name="bad" number={bad}/>
+      <Statistic name="all" number={getTotal()}/>
+      <Statistic name="average" number={(good-bad)/getTotal()}/>
+      <Statistic name="positive" number={(good/getTotal()*100)}/>
     </div>
   )
 }
