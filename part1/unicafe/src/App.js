@@ -25,16 +25,18 @@ const Statistic = ({name, number}) => {
 }
 
 const Statistics = ({good,neutral,bad, total}) => {
-  return (
-    <div>
-      <Statistic name="good" number={good}/>
-      <Statistic name="neutral" number={neutral}/>
-      <Statistic name="bad" number={bad}/>
-      <Statistic name="all" number={total}/>
-      <Statistic name="average" number={(good-bad)/total}/>
-      <Statistic name="positive" number={(good/total*100)}/>
-    </div>
-  )
+  if(total >0) {
+    return (
+      <div>
+        <Statistic name="good" number={good}/>
+        <Statistic name="neutral" number={neutral}/>
+        <Statistic name="bad" number={bad}/>
+        <Statistic name="all" number={total}/>
+        <Statistic name="average" number={(good-bad)/total}/>
+        <Statistic name="positive" number={(good/total*100)}/>
+      </div>
+    )
+  }
 }
 
 
