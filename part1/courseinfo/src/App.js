@@ -13,6 +13,7 @@ const Part = ({part}) => {
 }
 
 const Content = ({parts}) => {
+  /**Exercise 2.3 already done */
   const total = parts.reduce((total, p) => total + p.exercises, 0) //in a moment
   return (
     <div>
