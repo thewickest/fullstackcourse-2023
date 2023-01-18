@@ -1,5 +1,13 @@
 import { useState } from 'react'
 
+const Header = ({text}) => {
+  return (
+    <>
+      <h1>{text}</h1>
+    </>
+  )
+}
+
 const Button = ({handleClick, name}) => {
   return (
     <>
@@ -38,6 +46,7 @@ const App = () => {
    
   const [selected, setSelected] = useState(0)
   const [votes, setVotes] = useState(new Array(8).fill(0))
+  const [moreLiked, setMoreLiked] = useState(0)
 
   const getRandom = () => {
     let random = Math.floor(Math.random()*7)
@@ -46,14 +55,21 @@ const App = () => {
   const rate = (selected) => {
     const newVotes = [...votes]
     newVotes[selected] += 1
+    if(newVotes[selected] > newVotes[moreLiked]) {
+      setMoreLiked(selected)
+    }
     setVotes(newVotes)
   }
   return (
     <div>
+      <Header text="Anecdote of the day"/>
       <Anecdote anecdote={anecdotes[selected]}/>
       <Rating rate={votes[selected]}/>
       <Button handleClick={()=> rate(selected)} name="vote"/>
       <Button handleClick={()=> getRandom()} name="next anecdote"/>
+      <Header text="Anecdotes with most votes"/>
+      <Anecdote anecdote={anecdotes[moreLiked]}/>
+      <Rating rate={votes[moreLiked]}/>
     </div>
   )
 }
