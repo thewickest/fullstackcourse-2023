@@ -20,23 +20,31 @@ const Button = ({onClick, name}) => {
 /**We have already refactored the Statistic */
 const Statistic = ({name, number}) => {
   if(name==="positive"){
-    return(<p>{name} {number} %</p>)
+    return(
+      <tr>
+        <td>{name}</td><td>{number} %</td>
+      </tr>
+    )
   }else {
-    return(<p>{name} {number}</p>)
+    return(
+      <tr>
+        <td>{name}</td><td>{number}</td>
+      </tr>
+    )
   }
 }
 
 const Statistics = ({good,neutral,bad, total}) => {
   if(total >0) {
     return (
-      <div>
+      <table>
         <Statistic name="good" number={good}/>
         <Statistic name="neutral" number={neutral}/>
         <Statistic name="bad" number={bad}/>
         <Statistic name="all" number={total}/>
         <Statistic name="average" number={(good-bad)/total}/>
         <Statistic name="positive" number={(good/total*100)}/>
-      </div>
+      </table>
     )
   }
 }
