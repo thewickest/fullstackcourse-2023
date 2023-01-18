@@ -16,7 +16,9 @@ const App = () => {
 
   const addName = (event) => {
     event.preventDefault()
-    setPersons(persons.concat({name: newName}))
+    const filteredPersons = persons.filter(p => p.name === newName)
+    if(filteredPersons.length > 0) alert(`${newName} already added to the notebook`)
+    else {setPersons(persons.concat({name: newName}))}
   }
 
   const handleName = (event) => {
