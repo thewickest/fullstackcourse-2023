@@ -21,7 +21,6 @@ const App = () => {
       })
   },[])
 
-  //create person
   const addPerson = (event) => {
     event.preventDefault()
     const newPerson ={ name: newName, number: newNumber }
@@ -34,6 +33,19 @@ const App = () => {
           setPeople(people.concat(createdPerson))
           setFilteredPeople(filteredPeople.concat(createdPerson))
         })
+    }
+  }
+
+  const deletePerson = (event) => {
+    const id = event.target.id
+    const name = event.target.name
+    if(window.confirm(`Delete ${name}?`)){
+      peopleService
+        .remove(id)
+        .then((response => {
+          setPeople(people.filter(p => p.id != id))
+          setFilteredPeople(filteredPeople.filter(p => p.id != id))
+        }))
     }
   }
 
@@ -60,7 +72,7 @@ const App = () => {
             name={{value:newName, handler: handleName}}
             number={{value:newNumber,handler:handleNumber}}/>
       <h2>Numbers</h2>
-      <People people={filteredPeople} />
+      <People people={filteredPeople} handler={deletePerson}/>
     </div>
   )
 }
