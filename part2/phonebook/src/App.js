@@ -3,6 +3,7 @@ import axios from 'axios'
 import Filter from './components/Filter'
 import Form from './components/Form'
 import People from './components/People'
+import peopleService from './services/people'
 
 const App = () => {
   const [people, setPeople] = useState([])
@@ -11,13 +12,12 @@ const App = () => {
   const [filteredName, setFilteredName] = useState('')
   const [filteredPeople, setFilteredPeople] = useState(people)
 
-  //get people
   useEffect(()=>{
-    axios
-      .get('http://localhost:3001/people')
-      .then(response => {
-        setPeople(response.data)
-        setFilteredPeople(response.data)
+    peopleService
+      .getAll()
+      .then(initialPeople => {
+        setPeople(initialPeople)
+        setFilteredPeople(initialPeople)
       })
   },[])
 
@@ -28,11 +28,11 @@ const App = () => {
     const fp = people.filter(p => p.name === newName)
     if(fp.length > 0) alert(`${newName} already added to the notebook`)
     else {
-      axios
-        .post('http://localhost:3001/people',newPerson)
-        .then(response => {
-          setPeople(people.concat(response.data))
-          setFilteredPeople(filteredPeople.concat(response.data))
+      peopleService
+        .create(newPerson)
+        .then(createdPerson => {
+          setPeople(people.concat(createdPerson))
+          setFilteredPeople(filteredPeople.concat(createdPerson))
         })
     }
   }
