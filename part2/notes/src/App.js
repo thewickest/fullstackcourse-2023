@@ -12,7 +12,12 @@ const App = () => {
     noteService
       .getAll()
       .then(initialNotes => {
-        setNotes(initialNotes)
+        const fakeNote = {
+          content: 'this is a fake note',
+          important: false,
+          id: 5
+        }
+        setNotes(initialNotes.concat(fakeNote))
       })
   },[])
 
@@ -45,6 +50,12 @@ const App = () => {
       .update(id,changedNote)
       .then(updatedNote=> {
         setNotes(notes.map(n => n.id !== id ? n : updatedNote))
+      })
+      .catch(error => {
+        alert(
+          `the note '${note.content}' was already deleted from server`
+        )
+        setNotes(notes.filter(n => n.id !== id))
       })
   }
 
