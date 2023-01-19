@@ -23,9 +23,23 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault()
-    const newPerson ={ name: newName, number: newNumber }
+    let newPerson ={ name: newName, number: newNumber }
     const fp = people.filter(p => p.name === newName)
-    if(fp.length > 0) alert(`${newName} already added to the notebook`)
+    if(fp.length > 0) {
+      if(window.confirm(`${newName} is already added to the notebook, replace the old number with a new one?`)){
+        newPerson = {...fp[0]}
+        peopleService
+          .update({...newPerson, number: newNumber})
+          .then(updatedPerson => {
+            setPeople(people.map(p => p.name != newName ? p : updatedPerson))
+            setFilteredPeople(filteredPeople.map(p => p.name != newName ? p : updatedPerson))
+          })
+          .catch(error => {
+            console.log(error);
+          })
+
+      }
+    }
     else {
       peopleService
         .create(newPerson)
