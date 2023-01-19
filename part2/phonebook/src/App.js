@@ -11,23 +11,29 @@ const App = () => {
   const [filteredName, setFilteredName] = useState('')
   const [filteredPeople, setFilteredPeople] = useState(people)
 
+  //get people
   useEffect(()=>{
     axios
       .get('http://localhost:3001/people')
       .then(response => {
-        console.log('The response is', response.data);
         setPeople(response.data)
         setFilteredPeople(response.data)
       })
   },[])
 
+  //create person
   const addPerson = (event) => {
     event.preventDefault()
+    const newPerson ={ name: newName, number: newNumber }
     const fp = people.filter(p => p.name === newName)
     if(fp.length > 0) alert(`${newName} already added to the notebook`)
     else {
-      setPeople(people.concat({name: newName, number: newNumber}))
-      setFilteredPeople(people.concat({name: newName, number: newNumber}))
+      axios
+        .post('http://localhost:3001/people',newPerson)
+        .then(response => {
+          setPeople(people.concat(response.data))
+          setFilteredPeople(filteredPeople.concat(response.data))
+        })
     }
   }
 
