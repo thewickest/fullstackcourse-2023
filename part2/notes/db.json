@@ -17,8 +17,11 @@
     },
     {
       "content": "Shhh!",
-      "important": false,
-      "id": 4
+      "important": true,
+      "id": 4,
+      "test": {
+        "name": "Patrick"
+      }
     }
   ]
 }
