@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import axios from 'axios'
 import Filter from './components/Filter'
 import Form from './components/Form'
 import People from './components/People'
@@ -33,7 +32,10 @@ const App = () => {
         peopleService
           .update({...newPerson, number: newNumber})
           .then(updatedPerson => {
-            setNotificationMessage(`${newName} updated`)
+            setNotificationMessage({
+              message:`${newName} updated`,
+              class: 'notification'
+            })
             setTimeout(()=>setNotificationMessage(null), 5000)
             setPeople(people.map(p => p.name != newName ? p : updatedPerson))
             setFilteredPeople(filteredPeople.map(p => p.name != newName ? p : updatedPerson))
@@ -48,7 +50,10 @@ const App = () => {
       peopleService
         .create(newPerson)
         .then(createdPerson => {
-          setNotificationMessage(`${newName} added`)
+          setNotificationMessage({
+            message:`${newName} added`,
+            class: 'notification'
+          })
           setTimeout(()=>setNotificationMessage(null), 5000)
           setPeople(people.concat(createdPerson))
           setFilteredPeople(filteredPeople.concat(createdPerson))
@@ -66,6 +71,14 @@ const App = () => {
           setPeople(people.filter(p => p.id != id))
           setFilteredPeople(filteredPeople.filter(p => p.id != id))
         }))
+        .catch(error => {
+          setNotificationMessage({
+            message:`Information of ${name} was already removed from the server`,
+            class:'error'
+          })
+          setTimeout(()=>setNotificationMessage(null), 5000)
+          setFilteredPeople(filteredPeople.filter(p => p.id != id))
+        })
     }
   }
 
@@ -86,7 +99,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification message={notificationMessage} />
+      <Notification notification={notificationMessage} />
       <Filter value={filteredName} onChange={filterName} />
       <h2>add a new</h2>
       <Form onSubmit={addPerson}
