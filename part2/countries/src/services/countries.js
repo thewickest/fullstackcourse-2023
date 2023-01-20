@@ -7,13 +7,9 @@ const getAll = () => {
     return request.then(response => response.data)
 }
 
-const getOne= ({country}) => {
-
-}
-
 const getFlag = ({tld}) => {
     const request = axios.get(`${imgUrl}/${tld}.png`)
     request.then(response => response.data)
 }
 
-export default { getAll, getOne, getFlag }
+export default { getAll, getFlag }

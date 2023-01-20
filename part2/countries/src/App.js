@@ -24,10 +24,14 @@ const App = () =>{
     setValue(event.target.value)
   }
 
+  const handleButton = (c) => {
+    setShowingCountries([c])
+  }
+
   return (
     <div>
       find countries: <input value={value} onChange={handleValue}/>
-      <CountryList countries={showingCountries} />
+      <CountryList countries={showingCountries} handleButton={handleButton}/>
     </div>
   )
 }
