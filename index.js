@@ -25,6 +25,24 @@ let people = [
   }
 ]
 
+app.post('/api/persons', (request, response) => {
+  const body = request.body
+
+  console.log(request);
+  if(!body.name) {
+    return response.status(400).end()
+  }
+
+  const person = {
+    id: Math.floor(Math.random()*1000),
+    name: body.name,
+    number: body.number
+  }
+
+  people = people.concat(person)
+  response.json(person)
+})
+
 app.get('/info', (request, response) => {
   response.header({'Content-Type':'text/html'})
   response.write(`<p>Phonebook has info for ${people.length} people</p>`)
@@ -49,7 +67,7 @@ app.get('/api/persons/:id', (request, response) => {
 app.delete('/api/persons/:id', (request, response) => {
   const id = Number(request.params.id)
   people = people.filter(p => p.id !== id)
-  response.end()
+  response.status(204).end()
 })
 
 const PORT = 3001
