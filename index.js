@@ -25,6 +25,13 @@ const people = [
   }
 ]
 
+app.get('/info', (request, response) => {
+  response.header({'Content-Type':'text/html'})
+  response.write(`<p>Phonebook has info for ${people.length} people</p>`)
+  response.write(`<p>${new Date()}</p>`)
+  response.end()
+})
+
 app.get('/api/persons', (request, response) => {
   response.json(people)
 })
