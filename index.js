@@ -25,12 +25,17 @@ let people = [
   }
 ]
 
+const nameExists = (name) => {
+  return people.find(p => p.name === name)
+}
+
 app.post('/api/persons', (request, response) => {
   const body = request.body
 
-  console.log(request);
-  if(!body.name) {
-    return response.status(400).end()
+  if(!body.name || !body.number) {
+    return response.status(400).json({error:'name or number missing'})
+  }else if(nameExists(body.name)){
+    return response.status(400).json({error:'name must be unique'})
   }
 
   const person = {
