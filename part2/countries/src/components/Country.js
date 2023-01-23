@@ -35,21 +35,4 @@ const Country = ({country}) => (
   </div>
 )
 
-const CountryList = ({countries, handleButton}) => {
-  if(countries.length >10) {
-    return(<><br />Too many matches, specify another filter</>)
-  }
-  else if(countries.length <=10 && countries.length > 1) {
-    return (countries.map(n => 
-      <Fragment key={n.cca2}>
-        <br/>{n.name.common}
-        <button onClick={() => handleButton(n)}>show</button>
-      </Fragment>
-    ))
-  }
-  else if (countries.length == 1) {
-    return (<Country country={countries[0]} />)
-  }
-}
-
-export default CountryList
+export default Country
