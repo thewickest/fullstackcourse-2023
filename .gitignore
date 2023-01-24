@@ -102,6 +102,3 @@ dist
 
 # TernJS port file
 .tern-port
-
-part3/phonebook-backend
-part3/notes-render
