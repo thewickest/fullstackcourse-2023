@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js",
     "start": "node index.js",
-    "deploy": ""
+    "deploy": "git checkout feature/phonebook-render && git merge --no-ff feature/phonebook-backend && git push"
   },
   "repository": {
     "type": "git",
