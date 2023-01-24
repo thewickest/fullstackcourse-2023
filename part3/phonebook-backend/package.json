@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js",
     "start": "node index.js",
+    "build:ui": "cd ../../part2/phonebook && npm install && npm run build && cp -rf build ../../part3/phonebook-backend",
     "deploy": "git checkout feature/phonebook-render && git merge --no-ff feature/phonebook-backend && git push"
   },
   "repository": {
