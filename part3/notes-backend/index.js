@@ -1,10 +1,31 @@
 const express = require('express')
 const cors = require('cors')
+const mongoose = require('mongoose')
 const app = express()
 
 app.use(express.json())
 app.use(express.static('build'))
 app.use(cors())
+
+//DO NOT COMMIT THIS
+const url =
+  `mongodb+srv://graubuntu:${password}@cluster0.yttzt.mongodb.net/noteApp?retryWrites=true&w=majority`
+
+mongoose.set('strictQuery',false)
+mongoose.connect(url)
+
+const noteSchema = new mongoose.Schema({
+  content: String,
+  important: Boolean,
+})
+
+noteSchema.set('toJSON', (document, returnedObject) => {
+  returnedObject.id = returnedObject._id.toString()
+  delete returnedObject._id
+  //delete returnedObject._v
+})
+
+const Note = mongoose.model('Note', noteSchema)
 
 let notes = [
   {
@@ -48,7 +69,10 @@ app.post('/api/notes', (request, response) => {
 })
 
 app.get('/api/notes',(request,response) => {
-  response.json(notes)
+  //response.json(notes)
+  Note.find({}).then(result => {
+    response.json(result)
+  })
 })
 
 app.get('/api/notes/:id',(request,response) => {
