@@ -5,8 +5,8 @@ const Note = require('./models/note')
 const note = require('./models/note')
 const app = express()
 
-app.use(express.json())
 app.use(express.static('build'))
+app.use(express.json())
 app.use(cors())
 
 app.post('/api/notes', (request, response) => {
@@ -49,6 +49,12 @@ app.delete('/api/notes/:id', (request, response) => {
   })
 })
 
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({error: 'unknown endpoint'})
+}
+
+app.use(unknownEndpoint)
+
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
@@ -60,7 +66,6 @@ const errorHandler = (error, request, response, next) => {
   if (error.name === 'CastError') {
     return response.status(400).send({ error: 'malformatted id' })
   } 
-
   next(error)
 }
 
