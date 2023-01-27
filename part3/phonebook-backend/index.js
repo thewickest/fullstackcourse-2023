@@ -3,7 +3,6 @@ const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
 const Person = require('./model/person')
-const { response } = require('express')
 const app = express()
 
 morgan.token('data',(req,res) => JSON.stringify(req.body))
@@ -13,34 +12,28 @@ app.use(express.json())
 app.use(express.static('build'))
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :data'))
 
-const nameExists = (name) => {
-  return people.find(p => p.name === name)
-}
-
 app.post('/api/persons', (request, response) => {
   const body = request.body
-
-  // if(!body.name || !body.number) {
-  //   return response.status(400).json({error:'name or number missing'})
-  // }else if(nameExists(body.name)){
-  //   return response.status(400).json({error:'name must be unique'})
-  // }
 
   const person = new Person({
     name: body.name,
     number: body.number
   })
 
-  person.save().then(savedPerson => {
-    response.json(savedPerson)
-  })
+  person.save()
+    .then(savedPerson => {
+      response.json(savedPerson)
+    })
+    .catch(error => next(error))
 })
 
-app.get('/info', (request, response) => {
-  response.header({'Content-Type':'text/html'})
-  response.write(`<p>Phonebook has info for ${people.length} people</p>`)
-  response.write(`<p>${new Date()}</p>`)
-  response.end()
+app.get('/info',(request, response) => {
+  Person.count({}, (err,count) => {
+      response.header({'Content-Type':'text/html'})
+      response.write(`<p>Phonebook has info for ${count} people</p>`) 
+      response.write(`<p>${new Date()}</p>`)
+      response.end()
+    })
 })
 
 app.get('/api/persons', (request, response, next) => {
