@@ -20,11 +20,11 @@ const nameExists = (name) => {
 app.post('/api/persons', (request, response) => {
   const body = request.body
 
-  if(!body.name || !body.number) {
-    return response.status(400).json({error:'name or number missing'})
-  }else if(nameExists(body.name)){
-    return response.status(400).json({error:'name must be unique'})
-  }
+  // if(!body.name || !body.number) {
+  //   return response.status(400).json({error:'name or number missing'})
+  // }else if(nameExists(body.name)){
+  //   return response.status(400).json({error:'name must be unique'})
+  // }
 
   const person = new Person({
     name: body.name,
@@ -55,6 +55,21 @@ app.get('/api/persons/:id', (request, response, next) => {
   Person.findById(request.params.id)
     .then(person => {
       response.json(person)
+    })
+    .catch(error => next(error))
+})
+
+app.put('/api/persons/:id', (request, response, next) => {
+  const body = request.body
+  
+  const person = {
+    name: body.name,
+    number: body. number
+  }
+
+  Person.findByIdAndUpdate(request.params.id, person, {new: true})
+    .then(updatedPerson => {
+      response.json(updatedPerson)
     })
     .catch(error => next(error))
 })
