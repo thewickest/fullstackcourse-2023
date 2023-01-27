@@ -1,4 +1,3 @@
-import axios from 'axios'
 import {useState, useEffect} from 'react'
 import Note from "./components/Note"
 import noteService from './services/notes'
@@ -28,12 +27,7 @@ const App = () => {
     noteService
       .getAll()
       .then(initialNotes => {
-        const fakeNote = {
-          content: 'this is a fake note',
-          important: false,
-          id: 5
-        }
-        setNotes(initialNotes.concat(fakeNote))
+        setNotes(initialNotes)
       })
   },[])
 
