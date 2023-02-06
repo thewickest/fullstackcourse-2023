@@ -1,0 +1,36 @@
+{
+  "name": "phonebook-backend",
+  "version": "1.0.0",
+  "description": "This is the backend for the phonebook application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js",
+    "start": "node index.js",
+    "build:ui": "cd ../../part2/phonebook && npm install && npm run build && cp -rf build ../../part3/phonebook-backend",
+    "deploy": "git checkout feature/phonebook-render && git merge --no-ff -m 'Deploy to Prod' feature/phonebook-backend && git push",
+    "deploy:full": "npm run build:ui && npm run deploy",
+    "lint": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thewickest/fullstackcouse2023-phonebook-backend.git"
+  },
+  "author": "Alex Grau",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thewickest/fullstackcouse2023-phonebook-backend/issues"
+  },
+  "homepage": "https://github.com/thewickest/fullstackcouse2023-phonebook-backend#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^6.8.4",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.20"
+  },
+  "devDependencies": {
+    "eslint": "^8.33.0"
+  }
+}
