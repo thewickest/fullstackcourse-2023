@@ -41,7 +41,10 @@ const App = () => {
             setFilteredPeople(filteredPeople.map(p => p.name != newName ? p : updatedPerson))
           })
           .catch(error => {
-            console.log(error);
+            setNotificationMessage({
+              message: error.response.data.error,
+              class:'error'
+            })
           })
 
       }
@@ -58,6 +61,12 @@ const App = () => {
           setPeople(people.concat(createdPerson))
           setFilteredPeople(filteredPeople.concat(createdPerson))
         })
+        .catch(error => 
+          setNotificationMessage({
+            message: error.response.data.error,
+            class:'error'
+          })
+        )
     }
   }
 

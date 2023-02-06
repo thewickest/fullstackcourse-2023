@@ -12,7 +12,7 @@ app.use(express.json())
 app.use(express.static('build'))
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :data'))
 
-app.post('/api/persons', (request, response) => {
+app.post('/api/persons', (request, response, next) => {
   const body = request.body
 
   const person = new Person({
@@ -60,7 +60,7 @@ app.put('/api/persons/:id', (request, response, next) => {
     number: body. number
   }
 
-  Person.findByIdAndUpdate(request.params.id, person, {new: true})
+  Person.findByIdAndUpdate(request.params.id, person, {new: true, runValidators: true, context: 'query'})
     .then(updatedPerson => {
       response.json(updatedPerson)
     })
@@ -92,6 +92,9 @@ const errorHandler = (error, request, response, next) => {
   console.log(error);
   if(error.name === 'CastError') {
     response.status(400).send({error: 'malformated id'})
+  }
+  else if(error.name === 'ValidationError') {
+    response.status(400).send({error: error.message})
   }
   next(error)
 }
