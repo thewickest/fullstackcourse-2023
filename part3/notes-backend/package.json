@@ -10,7 +10,8 @@
     "build:ui": "rm -rf build && cd ../../part2/notes && npm run build && cp -r build ../../part3/notes-backend",
     "deploy": "git checkout feature/notes-render && git merge --no-ff -m 'Deploy to Production' feature/part-3 && git push",
     "deploy:full": "npm run build:ui && npm run deploy",
-    "logs:prod": "fly logs"
+    "logs:prod": "fly logs",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,7 @@
     "mongoose": "^6.8.4"
   },
   "devDependencies": {
+    "eslint": "^8.33.0",
     "nodemon": "^2.0.20"
   }
 }
